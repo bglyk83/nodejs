@@ -4,7 +4,7 @@ import fs from "fs";
 const app = express();
 
 app.get("/", (req, res) => {
-  fs.readFile("login.html", (err, data) => {
+  fs.readFile("login2.html", (err, data) => {
     if (err) {
       res.status(500);
       return res.send("파일 읽기 오류");
@@ -20,18 +20,19 @@ app.get("/login", (req, res) => {
   console.log(req.query);
   console.log("아이디: ", req.query.userid);
   console.log("비밀번호: ", req.query.userpw);
-  /*
+
   fs.readFile("result.html", "utf8", (err, data) => {
     if (err) {
       res.status(500).send("읽기 오류");
       return;
     }
     const sendlogindata = data
-      .replace("{{re-userid}}", req.query.userid || "")
-      .replace("{{re-userpw}}", req.query.userpw || "");
+      .replace("{{userid}}", req.query.userid || "")
+      .replace("{{userpw}}", req.query.userpw || "");
+
     res.status(200).set({ "Content-Type": "text/html" });
     res.send(sendlogindata);
-  });*/
+  });
 });
 
 app.listen(3000, () => {
