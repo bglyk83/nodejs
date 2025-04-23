@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
-    fs.readFile("index,html", (err, data) => {
+    fs.readFile("index.html", (err, data) => {
       if (err) {
         res.writeHead(500);
         return res.end("파일 읽기 오류");
