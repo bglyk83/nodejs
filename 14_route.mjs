@@ -17,6 +17,6 @@ app
     res.status(200).send("/posts DELETE 호출");
   });
 
-app.listen(port, () => {
+app.listen(3000, () => {
   console.log("SERVER 실행 중!!!!");
 });
