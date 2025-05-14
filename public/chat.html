@@ -100,6 +100,11 @@
             <span>😅</span>
             <span>🤣</span>
             <span>😁</span>
+            <span>😞</span>
+            <span>😛</span>
+            <span>🥱</span>
+            
+
 
         </div>
     </div>
@@ -139,7 +144,38 @@
         if (e.key === "Enter") sendMessage();
       });
 
+      channelSelector.onchange = () => {
+        const newChannel = channelSelector.value;
+        if (newChannel !== currentChannel) {
+          socket.emit("changeChannel", { newChannel });
+          currentChannel = newChannel;
+          channelName.textContent = `[채널: ${currentChannel}]`;
+          messages.innerHTML = "";
+        }
+      };
 
+      emojiBtn.onclick = () => {
+        emojiBox.style.display =
+          emojiBox.style.display === "block" ? "none" : "block";
+        emojiBox.style.top = emojiBtn.offsetTop - 60 + "px";
+        emojiBox.style.left = emojiBtn.offsetLeft - 60 + "px";
+      };
+      emojiBox.querySelectorAll("span").forEach((span) => {
+        span.onclick = () => {
+          messageInput.value += span.textContent;
+          emojiBox.style.display = "none";
+        };
+      });
+
+
+      socket.on("chatLog",(log)=>{
+        log.forEach(({user,text})=>{
+          const div = document.createElement("div");
+          div.textContent = `[${user}] : ${text} `;
+          if(user === "system") div.className = "system-log";
+          messages.appendChild(div);
+        })
+      })
 
       socket.emit("join",{nickname,channel:currentChannel});
 
